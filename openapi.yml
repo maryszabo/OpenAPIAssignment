@@ -1,0 +1,83 @@
+openapi: "3.0.0"
+info:
+  title: "Return Order confirmation"
+  description: Returns the order confirmation by orderID
+  version: "1.0"
+  paths: 
+    /order/{orderID}:
+      GET: 
+        summary: Returns a Order object by ID
+        parameters: 
+          - name : orderID
+            in: path
+            required: ture
+            schema: 
+              type : integer
+              format: int64
+              minimum: 1
+        responses: 
+          '200': 
+            description: Return order object
+            content: 
+              application/json:
+                schema: 
+                  type: object
+                  propertites: 
+                    id: 
+                      type: integer
+                      format: int64
+                      example: 1234
+                    items: 
+                      type: array
+                      format: string
+                      example: ["large black coffee", "medium earl grey tea"]
+                    numItems: 
+                      description: corresponds to the number of items in the order. Index matches item array
+                      type: array
+                      format: integer
+                      example: [1,2]
+          '400': 
+            description: The specified orderID is invalid (not a number)
+          '404': 
+            description: The specified orderID was not found
+      POST: 
+        summary: Creates a new order
+        requestBody: 
+          required: true
+          content: 
+            application/json: 
+              schema: 
+                type: object
+                properties: 
+                  type: object
+                  propertites: 
+                    id: 
+                      type: integer
+                      format: int64
+                      example: 1234
+                    items: 
+                      type: array
+                      format: string
+                      example: ["large black coffee", "medium earl grey tea"]
+                    numItems: 
+                      description: corresponds to the number of items in the order. Index matches item array
+                      type: array
+                      format: integer
+                      example: [1,2]
+        responses:
+          '201': 
+            description: New order created
+          '400': 
+            description: The specified orderID is invalid (not a number)
+          '404': 
+            description: A order with the specified orderID was not found
+      DELETE: 
+        summary: deletes orders after specified time
+        responses:
+          '202': 
+            description: Order with specified OrderID has been deleted
+          '400': 
+            description: The specified orderID is invalid (not a number)
+          '404':  
+            description: The specified orderID was not found
+    
